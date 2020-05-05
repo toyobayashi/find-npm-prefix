@@ -1,13 +1,11 @@
 'use strict'
 // try to find the most reasonable prefix to use
 
-module.exports = findPrefix
-
 const fs = require('fs')
 const path = require('path')
 
 function findPrefix (dir) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     dir = path.resolve(dir)
 
     // this is a weird special case where an infinite recurse of
@@ -54,3 +52,46 @@ function findPrefix_ (dir, original) {
     })
   })
 }
+
+function findPrefixSync (dir) {
+  dir = path.resolve(dir)
+
+  // this is a weird special case where an infinite recurse of
+  // node_modules folders resolves to the level that contains the
+  // very first node_modules folder
+  let walkedUp = false
+  while (path.basename(dir) === 'node_modules') {
+    dir = path.dirname(dir)
+    walkedUp = true
+  }
+  if (walkedUp) {
+    return dir
+  }
+
+  return findPrefixSync_(dir)
+}
+
+function findPrefixSync_ (dir, original = dir) {
+  const parent = path.dirname(dir)
+  if (parent === dir) return original
+
+  let files
+  try {
+    files = fs.readdirSync(dir)
+  } catch (err) {
+    if (dir === original && err.code !== 'ENOENT') {
+      throw err
+    } else {
+      return original
+    }
+  }
+
+  if (files.indexOf('node_modules') !== -1 || files.indexOf('package.json') !== -1) {
+    return dir
+  }
+
+  return findPrefixSync_(parent, original)
+}
+
+exports.findPrefix = findPrefix
+exports.findPrefixSync = findPrefixSync

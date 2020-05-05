@@ -1,29 +1,32 @@
 {
-  "name": "find-npm-prefix",
-  "version": "1.0.2",
+  "name": "@tybys/find-npm-prefix",
+  "version": "2.0.0",
   "description": "Find the npm project directory associated with for a given directory",
   "main": "find-prefix.js",
+  "typings": "find-prefix.d.ts",
   "scripts": {
     "test": "standard && tap --100 test"
   },
   "keywords": [],
-  "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
+  "author": "toyobayashi",
   "license": "ISC",
   "devDependencies": {
     "require-inject": "^1.4.4",
     "standard": "^10.0.3",
     "tap": "^12.4.0"
   },
-  "directories": {
-    "test": "test"
+  "publishConfig": {
+    "access": "public"
   },
-  "dependencies": {},
+  "files": [
+    "find-prefix.js"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/npm/find-npm-prefix.git"
+    "url": "git+https://github.com/toyobayashi/find-npm-prefix.git"
   },
   "bugs": {
-    "url": "https://github.com/npm/find-npm-prefix/issues"
+    "url": "https://github.com/toyobayashi/find-npm-prefix/issues"
   },
-  "homepage": "https://github.com/npm/find-npm-prefix#readme"
+  "homepage": "https://github.com/toyobayashi/find-npm-prefix#readme"
 }

@@ -5,20 +5,28 @@ Find the npm project directory associated with for a given directory
 ## USAGE
 
 ```
-const findPrefix = require('find-npm-prefix')
+const { findPrefix, findPrefixSync } = require('find-npm-prefix')
 
+// sync
+const prefix = findPrefixSync(process.cwd())
+
+// async
 findPrefix(process.cwd()).then(prefix => {
-  …
+  // ...
 })
 ```
 
-## findPrefix(dir) → Promise(prefix)
+## findPrefix(dir: string): Promise\<string\>
 
 This computes the npm prefix, that is, the directory that npm adds and
 removes modules from for a given path. 
 
 It takes a directory as an argument and returns a promise of the associated
 prefix directory.
+
+## findPrefixSync(dir: string): string
+
+Sync version.
 
 ## Algorithm
 
